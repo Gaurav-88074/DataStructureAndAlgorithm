@@ -49,8 +49,11 @@ int main(int argc, char const *argv[]){
     matrix->set(6,1,1);
     matrix->set(8,2,2);
     matrix->set(9,3,3);
+
     matrix->display();
 
     cout<<matrix->get(1,2)<<endl;
+    cout<<matrix->get(2,1)<<endl;
+
     return 0;
 }
