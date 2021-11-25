@@ -1,5 +1,6 @@
 #include<iostream>
 #include<queue>
+#include<stack>
 using namespace std;
 
 class node{
@@ -84,6 +85,58 @@ void inOrder(node* root){
     cout<<root->data<<" ";
     inOrder(root->right);
 }
+void preOrder(node* root){
+    if(root==NULL){
+        return;
+    }
+    cout<<root->data<<" ";
+    inOrder(root->left);
+    inOrder(root->right);
+}
+void postOrder(node* root){
+    if(root==NULL){
+        return;
+    }
+    inOrder(root->left);
+    inOrder(root->right);
+    cout<<root->data<<" ";
+}
+void preOrderIterative(node * root){
+    if(!root){
+        return;
+    }
+    stack<node*> s ;
+    s.push(root);
+    while (!s.empty()){
+        node * head = s.top();
+        s.pop();
+        cout<<head->data<<" ";
+        if (head->right){
+            s.push(head->right);
+        }
+        if (head->left){
+            s.push(head->left);
+        }
+    }
+}
+void postOrderIterative(node * root){
+    if(!root){
+        return;
+    }
+    stack<node*> s ;
+    s.push(root);
+    while (!s.empty())
+    {
+        node * head = s.top();
+        while (head!=NULL)
+        {
+            s.push(head);
+            head=head->left;
+        }
+        
+    }
+    
+}
 void levelOrder(node* root){
     static queue<node*> l;
     l.push(root);
@@ -123,19 +176,23 @@ int main(int argc, char const *argv[])
     root = add(root,4);
 
     inOrder(root);cout<<endl;
-    root = discard(root,5);
-    inOrder(root);cout<<endl;
-    root = discard(root,3);
-    inOrder(root);cout<<endl;
+    // root = discard(root,5);
+    // inOrder(root);cout<<endl;
+    // root = discard(root,3);
+    // inOrder(root);cout<<endl;
     //--------------------------------
-    levelOrder(root);
+    levelOrder(root);cout<<endl;
     //--------------------------------
-    cout<<contains(root,3)<<endl;
-    cout<<contains(root,5)<<endl;
-    cout<<contains(root,6)<<endl;
-    cout<<contains(root,1)<<endl;
-    cout<<contains(root,4)<<endl;
-    cout<<contains(root,2)<<endl;
+    //--------------------------------
+    preOrder(root);cout<<endl;
+    preOrderIterative(root);cout<<endl;
+    //--------------------------------
+    // cout<<contains(root,3)<<endl;
+    // cout<<contains(root,5)<<endl;
+    // cout<<contains(root,6)<<endl;
+    // cout<<contains(root,1)<<endl;
+    // cout<<contains(root,4)<<endl;
+    // cout<<contains(root,2)<<endl;
 
     return 0;
 }
