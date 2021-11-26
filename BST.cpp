@@ -120,21 +120,21 @@ void preOrderIterative(node * root){
     }
 }
 void postOrderIterative(node * root){
-    if(!root){
-        return;
-    }
-    stack<node*> s ;
-    s.push(root);
-    while (!s.empty())
-    {
-        node * head = s.top();
-        while (head!=NULL)
-        {
-            s.push(head);
-            head=head->left;
-        }
+    // if(!root){
+    //     return;
+    // }
+    // stack<node*> s ;
+    // s.push(root);
+    // while (!s.empty())
+    // {
+    //     node * head = s.top();
+    //     while (head!=NULL)
+    //     {
+    //         s.push(head);
+    //         head=head->left;
+    //     }
         
-    }
+    // }
     
 }
 void levelOrder(node* root){
