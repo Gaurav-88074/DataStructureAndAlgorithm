@@ -93,6 +93,7 @@ class avlTree{
             else{
                 if (!root->right && !root->left){
                     root = root->right;
+                    
                 }
                 else if(!root->right){
                     root =  root->left;
@@ -107,7 +108,9 @@ class avlTree{
                 }
                 
             }
-            root->height = getHeight(root);
+            if(root){
+                root->height = getHeight(root);
+            }
             return root;
         }
         void discard(int data){
@@ -162,7 +165,7 @@ int main(int argc, char const *argv[]){
     l->add(7);
     l->add(10);
     l->display();
-    // l->discard(5);
+    l->discard(5);
     l->levelOrder();
     l->display();
     return 0;
