@@ -43,6 +43,25 @@ class avlTree{
             int hl = root && root->left  ?root->left->height:0; 
             return hr>hl ? hr+1:hl+1;
         }
+        int balanceFactor(node* &root){
+            int left  = root && root->left ?root->left ->height:0;
+            int right = root && root->right?root->right->height:0;
+            return left-right;
+        }
+        node * llRotation(node * root){
+            node * x = root->left;
+            node * y = x->right;
+            x->right = root;
+            root->left = y;
+            return x;
+        }
+        node * rrRotation(node * root){
+            node * x = root->right;
+            node * y = x->left;
+            x->left = root;
+            root->right = y;
+            return x;
+        }
         node* add(node* &root,int data){
             if(!root){
                 return new node(data);
@@ -52,6 +71,20 @@ class avlTree{
             }
             else{
                 root->right = add(root->right,data);
+            }
+            if (balanceFactor(root)==2 && balanceFactor(root->left)==1){
+                root = llRotation(root);
+            }
+            else if (balanceFactor(root)==2 && balanceFactor(root->left)==-1){
+                root->left = rrRotation(root->left);
+                root = llRotation(root);
+            }
+            else if (balanceFactor(root)==-2 && balanceFactor(root->right)==1){
+                root->right = llRotation(root->right);
+                root = rrRotation(root);
+            }
+            else if (balanceFactor(root)==-2 && balanceFactor(root->right)==-1){
+                root = rrRotation(root);
             }
             root->height = getHeight(root);
             return root;
@@ -109,6 +142,20 @@ class avlTree{
                 
             }
             if(root){
+                if (balanceFactor(root)==2 && balanceFactor(root->left)==1){
+                root = llRotation(root);
+                }
+                else if (balanceFactor(root)==2 && balanceFactor(root->left)==-1){
+                    root->left = rrRotation(root->left);
+                    root = llRotation(root);
+                }
+                else if (balanceFactor(root)==-2 && balanceFactor(root->right)==1){
+                    root->right = llRotation(root->right);
+                    root = rrRotation(root);
+                }
+                else if (balanceFactor(root)==-2 && balanceFactor(root->right)==-1){
+                    root = rrRotation(root);
+                }
                 root->height = getHeight(root);
             }
             return root;
@@ -116,11 +163,7 @@ class avlTree{
         void discard(int data){
             this->root = this->discard(root,data);
         }
-        int balanceFactor(node* &root){
-            int left  = root && root->left ?root->left ->height:0;
-            int right = root && root->right?root->right->height:0;
-            return left-right;
-        }
+        
         void levelOrder(){
             queue<node*> l;
             l.push(root);
@@ -138,8 +181,7 @@ class avlTree{
                     }
                 }
                 else{
-                    cout<<d->data<<" height : "<<
-                    d->height<<" bf "<<balanceFactor(d)<<" ";
+                    cout<<d->data<<" ";
                     if(d->left){
                         l.push(d->left);
                     }
@@ -155,18 +197,19 @@ class avlTree{
 int main(int argc, char const *argv[]){
     
     avlTree* l = new avlTree();
-    l->add(5);
-    l->add(6);
+    l->add(1);
+    l->add(2);
     l->add(3);
     l->add(4);
-    l->add(2);
-    l->add(1);
-    l->add(9);
+    l->add(5);
+    l->add(6);
     l->add(7);
+    l->add(8);
+    l->add(9);
     l->add(10);
-    l->display();
+    // l->display();
     l->discard(5);
     l->levelOrder();
-    l->display();
+    // l->display();
     return 0;
 }
